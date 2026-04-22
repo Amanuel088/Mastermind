@@ -42,19 +42,6 @@ red  green  blue  yellow  orange  purple
 
 ---
 
-## Project Structure
-
-mastermind/
-├── mastermind.rb        # Entry point — boots the game
-├── lib/
-│   ├── game.rb          # Main game loop and orchestration
-│   ├── code_maker.rb    # Generates and holds the secret code
-│   ├── code_breaker.rb  # Handles player input and validation
-│   └── feedback.rb      # Calculates and displays guess feedback
-└── README.md
-
----
-
 ## How to Run
 
 Make sure you have Ruby installed, then:
