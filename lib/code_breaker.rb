@@ -11,7 +11,7 @@ class CodeBreaker
       if input.length == CODE_LENGTH && input.all? { |c| COLORS.include?(c) }
         return input
       else
-        puts "❌ Invalid! Enter exactly #{CODE_LENGTH} colors from: #{COLORS.join(', ')}"
+        puts "Invalid! Enter exactly #{CODE_LENGTH} colors from: #{COLORS.join(', ')}"
       end
     end
   end

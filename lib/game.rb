@@ -10,7 +10,7 @@ class Game
   end
 
   def play
-    puts "\n🎯 Welcome to Mastermind!"
+    puts "\nWelcome to Mastermind!"
     role = choose_role
 
     if role == '1'
@@ -32,12 +32,12 @@ class Game
 
       return input if %w[1 2].include?(input)
 
-      puts "❌ Invalid choice! Please enter 1 or 2."
+      puts "Invalid choice! Please enter 1 or 2."
     end
   end
 
   def human_guesses
-    puts "\n🤖 I've generated a secret code. Can you crack it?"
+    puts "\nI've generated a secret code. Can you crack it?"
     puts "Available colors: #{COLORS.join(', ')}"
     puts "You have #{MAX_TURNS} turns. Good luck!\n\n"
 
@@ -52,18 +52,18 @@ class Game
       feedback.display(result)
 
       if result[:exact] == CODE_LENGTH
-        puts "\n🎉 You cracked the code in #{@turns_taken} turns! You win!"
+        puts "\nYou cracked the code in #{@turns_taken} turns! You win!"
         return
       end
     end
 
     @code_maker.reveal
-    puts "💀 Out of turns! Better luck next time."
+    puts "Out of turns! Better luck next time."
   end
 
   def human_makes_code
     secret = get_human_code
-    puts "\n🤖 Challenge accepted! I will now try to guess your code...\n\n"
+    puts "\nChallenge accepted! I will now try to guess your code...\n\n"
 
     MAX_TURNS.times do |turn|
       @turns_taken = turn + 1
@@ -73,16 +73,19 @@ class Game
       feedback = Feedback.new(secret, guess)
       result   = feedback.calculate
 
-      puts "💻 Computer guesses: #{guess.join(', ')}"
+      puts "Computer guesses: #{guess.join(', ')}"
       feedback.display(result)
 
       if result[:exact] == CODE_LENGTH
-        puts "\n🤖 I cracked your code in #{@turns_taken} turns! Computer wins!"
+        puts "\nI cracked your code in #{@turns_taken} turns! Computer wins!"
         return
       end
+
+      # this was missing — teach the computer from feedback!
+      @code_breaker.eliminate(guess, result)
     end
 
-    puts "\n🎉 I couldn't guess your code #{secret.join(', ')}! You win!"
+    puts "\nI couldn't guess your code #{secret.join(', ')}! You win!"
   end
 
   def get_human_code
@@ -92,10 +95,10 @@ class Game
       input = gets.chomp.downcase.split
 
       if input.length == CODE_LENGTH && input.all? { |c| COLORS.include?(c) }
-        puts "✅ Secret code set! Don't tell the computer! 🤫"
+        puts "Secret code set! Don't tell the computer!"
         return input
       else
-        puts "❌ Invalid! Enter exactly #{CODE_LENGTH} colors from: #{COLORS.join(', ')}"
+        puts "Invalid! Enter exactly #{CODE_LENGTH} colors from: #{COLORS.join(', ')}"
       end
     end
   end
